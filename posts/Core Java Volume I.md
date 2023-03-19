@@ -151,7 +151,11 @@
 
 #### 集合
 
-- Java 类库将接口与实现分离
+- Java 类库将接口与实现分离，**集合类的基本接口是 Collection 和 Map 接口**
+- **集合是 Collection，集是 Set，映射是 Map**
+- **Collection、Map 和 Iterator 都是泛型接口**
+- **AbstractCollection、AbstractMap 超类实现了大部分方法，具体集合类可以扩展这个超类**
+- **ListIterator 是 Iterator 的一个子接口，定义了一个 add 方法用于在迭代器前面增加一个元素**
 - 循环数组队列可以用 ArrayQueue 类，链表队列可以用 LinkedList 类
 - 一旦构造了集合，不需要知道使用了哪种实现，可以修改构造器部分轻松改为另一种实现
 - 循环数组是一个有界集合，他的容量有限；如果要收集的对象数量没有上限，可以使用链表
@@ -163,13 +167,35 @@
 - **next 方法和 remove 方法中间存在依赖性，调用 remove 之前需要调用 next**
 - **随机访问：使用一个整型索引来访问**
 - **顺序访问：使用一个迭代器来访问**
-- Java 中所有链表都有双向链接
 - **add 方法只依赖迭代器的位置，而 remove 方法还要依赖迭代器的状态**
 - **一个集合可以同时关联多个读迭代器或一个读写迭代器**
-- 有序集合中元素位置很重要，有 2 种访问方式：通过迭代器、通过 get 和 set 方法随机访问
-- 单线程使用 ArrayList，多线程使用 Vector (他的方法都是同步的，线程安全)
-- Java 中散列表的实现是链表数组
+- LinkedList：Java 中所有链表都有双向链接
+- ArrayList：有序集合中元素位置很重要，有 2 种访问方式：通过迭代器、通过 get 和 set 方法随机访问
+- ArrayList：单线程使用 ArrayList，多线程使用 Vector (他的方法都是同步的，线程安全)
+- **Java 中散列表的实现是链表数组**
 - 标准库桶数为 2 的幂，装填因子为 0.75 是合理的
-- 树集：需要数据有序，任意两个元素是可以比较的
-- 有序：LinkedList、ArrayList/Vector、TreeSet
-- 无序： HashTable/HashSet
+- TreeSet：需要数据有序，任意两个元素是可以比较的
+- 双端队列：可以在队头或队尾添加/删除元素
+- **优先队列：任意顺序插入，有序的顺序读取。应用场景是任务调度，可以按优先级调度任务**
+- 更新映射条目：1. getOrDefault 2. putIfAbsent 3. merge
+- **映射的视图：实现了 Collection 接口或其某个子接口的对象**
+- **有 3 种视图**：
+  1. 键集 `Set<K> keySet()`
+  2. 值集合 `Collection<V> values()`
+  3. 键/值对集 `Set<Map.Entry<K, V>> entrySet`
+- 枚举集 EnumSet 的元素属于一个枚举类型
+- 枚举映射 EnumMap 的键属于一个枚举类型
+- **原集合修改，副本不受影响，视图会反应这些变化**
+- 子范围：subList 等方法获取子范围视图
+- 检查型视图：`Collections.checkedList(string,  String.class)` 可以检查插入的对象是否属于给定的类
+- 同步视图：`Collections.synchronizedMap`
+- 算法：
+  - sort 和 shuffle，稳定排序
+  - search: binarySearch 要求集合有序，并可以随机访问
+  - 简单算法：max、min、批操作（replaceAll、removeAll、retainAll），并集：firstSet.retainAll(secondSet)
+- 集合与数组的转换
+  - 数组转成 List：List.of()
+  - 集合转数组：List.toArray()
+- 属性映射：键和值都是字符串
+- 有序：LinkedList、ArrayList/Vector、TreeSet、TreeMap、EnumSet、EnumMap
+- 无序： HashTable/HashSet、HashMap
